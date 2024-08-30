@@ -7,6 +7,8 @@ let cont = 0;
 export function Home() {
     const [usersList, setUsersList] = useState<User[]>([]);
     const [newUserName, setNewUserName] = useState<string>("");
+    const [newUserEmail, setNewUserEmail] = useState<string>("");
+    const [newUserPassword, setNewUserPassword] = useState<string>("");
     const [userDeleteId, setUserDeleteId] = useState<number>();
 
     useEffect(() => {
@@ -42,10 +44,14 @@ export function Home() {
             </div>
             <div>
                 <input onChange={e => setNewUserName(e.target.value)} value={newUserName} type="text" placeholder="User name" />
+                <input onChange={e => setNewUserEmail(e.target.value)} value={newUserName} type="text" placeholder="User email" />
+                <input onChange={e => setNewUserPassword(e.target.value)} value={newUserName} type="text" placeholder="User password" />
+
                 <button onClick={() => {
                     trpc.createUser.query({
-                        id: cont,
-                        name: newUserName
+                        name: newUserName,
+                        email: newUserEmail,
+                        password: newUserPassword,
                     }).then(result => {
                         refresh();
                         clearInputs()
